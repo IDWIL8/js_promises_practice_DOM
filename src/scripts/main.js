@@ -18,7 +18,7 @@ const errorHandler = (message) => {
   document.body.appendChild(errorMessage);
 };
 
-const firstPromice = new Promise((resolve, reject) => {
+const firstPromise = new Promise((resolve, reject) => {
   document.addEventListener(
     'click',
     () => {
@@ -32,7 +32,7 @@ const firstPromice = new Promise((resolve, reject) => {
   }, 3000);
 });
 
-const secondPromice = new Promise((resolve, reject) => {
+const secondPromise = new Promise((resolve, reject) => {
   const handleClick = () => {
     resolve(`Second promise was resolved`);
   };
@@ -41,7 +41,7 @@ const secondPromice = new Promise((resolve, reject) => {
   document.addEventListener('contextmenu', handleClick, { once: true });
 });
 
-const thirdPromice = new Promise((resolve, reject) => {
+const thirdPromise = new Promise((resolve, reject) => {
   let leftClicked = false;
   let rightClicked = false;
   const handleRightClick = () => {
@@ -56,8 +56,11 @@ const thirdPromice = new Promise((resolve, reject) => {
   const checkBothClicked = () => {
     if (leftClicked && rightClicked) {
       resolve(`Third promise was resolved`);
-      document.addEventListener('contextmenu', handleRightClick);
-      document.addEventListener('click', handleLeftClick);
+
+      document.addEventListener('contextmenu', handleRightClick, {
+        once: true,
+      });
+      document.addEventListener('click', handleLeftClick, { once: true });
     }
   };
 
@@ -65,6 +68,6 @@ const thirdPromice = new Promise((resolve, reject) => {
   document.addEventListener('click', handleLeftClick);
 });
 
-firstPromice.then(successHandler).catch(errorHandler);
-secondPromice.then(successHandler).catch(errorHandler);
-thirdPromice.then(successHandler).catch(errorHandler);
+firstPromise.then(successHandler).catch(errorHandler);
+secondPromise.then(successHandler).catch(errorHandler);
+thirdPromise.then(successHandler).catch(errorHandler);
